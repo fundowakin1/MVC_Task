@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MVC_Task.Contexts;
+using MVC_Task.UOW;
 
 namespace MVC_Task
 {
@@ -34,6 +35,7 @@ namespace MVC_Task
             {
                 options.UseSqlServer(Configuration.GetConnectionString("PlayerDB")).EnableSensitiveDataLogging();
             });
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

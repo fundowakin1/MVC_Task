@@ -8,5 +8,6 @@
         public decimal AmountOfMoney { get; set; }
 
         public virtual Player Player { get; set; }
+
     }
 }
