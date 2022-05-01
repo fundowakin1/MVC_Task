@@ -23,7 +23,7 @@ namespace MVC_Task.Contexts
             modelBuilder.Entity<Player>().HasKey(player => player.Id);
             modelBuilder.Entity<PlayerInfo>().HasKey(playerInfo => playerInfo.PlayerId);
             
-            modelBuilder.Entity<PlayerInfo>().HasOne(x => x.PlayerEntity)
+            modelBuilder.Entity<PlayerInfo>().HasOne(x => x.Player)
                 .WithOne(y => y.PlayerInfoEntity).HasForeignKey<PlayerInfo>(k => k.PlayerId);
         }
     }
