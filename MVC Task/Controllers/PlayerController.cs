@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using MVC_Task.Models;
 using MVC_Task.UOW;
 using MVC_Task.ViewModels;
 
@@ -11,10 +12,6 @@ namespace MVC_Task.Controllers
         public PlayerController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
-        public IActionResult Index()
-        {
-            return View();
         }
 
         public IActionResult ShowScoreTable()
@@ -36,6 +33,27 @@ namespace MVC_Task.Controllers
         public IActionResult CreateCharacter(CharacterViewModel character)
         {
             return RedirectToAction("MainGameplay", "Gameplay", character);
+        }
+
+        public IActionResult PlayersDeath(CharacterViewModel character)
+        {
+            
+            var player = new Player()
+            {
+                AmountOfTurns = character.AmountOfTurns,
+                HasWon = false,
+                IsAlive = false
+            };
+            _unitOfWork.PlayerRepository.Add(player);
+            var playerInfo = new PlayerInfo()
+            {
+                AmountOfMoney = character.AmountOfMoney,
+                Name = character.Name,
+                Race = character.Race,
+                PlayerId = _unitOfWork.PlayerRepository.GetAll().Count()
+            };
+            _unitOfWork.PlayerInfoRepository.Add(playerInfo);
+            return View(character);
         }
     }
 }

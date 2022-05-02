@@ -4,5 +4,6 @@ namespace MVC_Task.Interfaces
 {
     public interface IPlayerInfoRepository : IRepository<PlayerInfo>
     {
+        public void Add(PlayerInfo playerInfo);
     }
 }

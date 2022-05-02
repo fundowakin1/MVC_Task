@@ -23,5 +23,11 @@ namespace MVC_Task.Repositories
         {
             return _context.PlayersInfo.FirstOrDefault(playerInfo => playerInfo.PlayerId == id);
         }
+
+        public void Add(PlayerInfo playerInfo)
+        {
+            _context.PlayersInfo.Add(playerInfo);
+            _context.SaveChanges();
+        }
     }
 }

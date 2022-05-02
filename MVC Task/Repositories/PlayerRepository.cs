@@ -23,5 +23,11 @@ namespace MVC_Task.Repositories
         {
             return _context.Players.FirstOrDefault(player => player.Id == id);
         }
+
+        public void Add(Player player)
+        {
+            _context.Players.Add(player);
+            _context.SaveChanges();
+        }
     }
 }

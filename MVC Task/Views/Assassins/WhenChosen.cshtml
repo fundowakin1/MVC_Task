@@ -1,0 +1,5 @@
+﻿@model MVC_Task.ViewModels.AssassinsViewModel
+
+<button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("InteractionWithAssassin", "Assassins", Model)'">Pay guild some money</button>
+<p>@Model.Character.Name</p>
+<button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model)'">Reject the proposal</button>

@@ -13,11 +13,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Gameplay\MainGameplay.cshtml" />
+    <UpToDateCheckInput Remove="Views\Gameplay\MainGameplay.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Gameplay\MainGameplay.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Assassins\WhenChosen.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Gameplay\MainGameplay.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Assassins\WhenChosen.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

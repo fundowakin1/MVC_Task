@@ -1,0 +1,9 @@
+﻿@model MVC_Task.ViewModels.AssassinsViewModel
+
+
+<form asp-action="InteractionWithAssassinPost" asp-controller="Assassins" class="row row-cols-lg-auto g-3 align-items-center">
+    <label asp-for="InputtedAmountOfMoney" class="form-label">Pick the amount of money to hire assassin</label>
+    <input asp-for="InputtedAmountOfMoney" type="range" class="form-range" min="5" max="@Model.Character.AmountOfMoney" step="0.5" id="customRange3">
+    <button type="submit" class="btn btn-check btn-lg btn-block">Hire the assassin</button>
+</form>
+<button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
