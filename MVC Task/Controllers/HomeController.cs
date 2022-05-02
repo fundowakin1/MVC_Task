@@ -17,9 +17,5 @@ namespace MVC_Task.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }

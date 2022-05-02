@@ -21,8 +21,21 @@ namespace MVC_Task.Controllers
         {
             var players = _unitOfWork.PlayerRepository.GetAll().ToList();
             var playersInfo = _unitOfWork.PlayerInfoRepository.GetAll().ToList();
-            var playerFullInfo = new PlayerFullInfo() {Players = players, PlayersInfo = playersInfo};
+            var playerFullInfo = new PlayerFullInfoViewModel() {Players = players, PlayersInfo = playersInfo};
             return View(playerFullInfo);
-        }   
+        }
+
+        [HttpGet]
+        public IActionResult CreateCharacter()
+        {
+            var character = new CharacterViewModel();
+            return View(character);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCharacter(CharacterViewModel character)
+        {
+            return RedirectToAction("MainGameplay", "Gameplay", character);
+        }
     }
 }

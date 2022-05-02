@@ -1,0 +1,25 @@
+﻿@model MVC_Task.ViewModels.CharacterViewModel
+
+
+<form asp-action="CreateCharacter" asp-controller="Player" class="row row-cols-lg-auto g-3 align-items-center">
+    <div class="col-12">
+        <label asp-for="Name" class="visually-hidden" for="inlineFormInputGroupUsername">Character's name</label>
+        <div class="input-group">
+            <input asp-for="Name" type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Character's name">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="Race" class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+        <select asp-for="Race" class="form-select" id="inlineFormSelectPref">
+            <option value="Human">Human</option>
+            <option value="Elven">Elven</option>
+            <option value="Gnome">Gnome</option>
+            <option value="Vampire">Vampire</option>
+        </select>
+    </div>
+    
+    <div class="col-12">
+        <button type="submit" class="btn btn-danger btn-lg btn-block">Let's dance!</button>
+    </div>
+</form>
