@@ -1,4 +1,4 @@
-﻿@model MVC_Task.ViewModels.PlayerFullInfo
+﻿@model MVC_Task.ViewModels.PlayerFullInfoViewModel
 
 <table class="table">
     <thead>
@@ -31,3 +31,4 @@
     }
     </tbody>
 </table>
+<button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork again</button>

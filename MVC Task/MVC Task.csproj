@@ -12,4 +12,17 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Gameplay\MainGameplay.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Assassins\WhenChosen.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Gameplay\MainGameplay.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Assassins\WhenChosen.cshtml" />
+  </ItemGroup>
+
 </Project>

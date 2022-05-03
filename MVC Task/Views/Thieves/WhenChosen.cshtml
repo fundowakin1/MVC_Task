@@ -1,0 +1,7 @@
+﻿@model MVC_Task.ViewModels.ThiefViewModel
+
+<h1>You've met thief @Model.Thief.MemberInfoEntity.Name</h1>
+
+<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithThief", "Thieves", new {Model})'">
+<input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">
+
