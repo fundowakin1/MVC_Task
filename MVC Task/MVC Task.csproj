@@ -25,8 +25,4 @@
     <UpToDateCheckInput Remove="Views\Assassins\WhenChosen.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model MVC_Task.ViewModels.BeggarViewModel
+
+<h1>You've met beggar @Model.Beggar.MemberInfoEntity.Name</h1>
+
+
+@Html.ActionLink("Pay him some money", "InteractionWithBeggar", "Beggars",new {Model.Character, Model.Beggar, Model.Beggar.MemberInfoEntity}, new { @class = "btn btn-primary" })
+<input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">

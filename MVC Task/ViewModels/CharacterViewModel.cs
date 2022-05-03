@@ -11,5 +11,7 @@ namespace MVC_Task.ViewModels
         public bool HasWon { get; set; } = false;
         public decimal AmountOfMoney { get; set; } = 100m;
         public bool IsAlive { get; set; }
+        public int NumberOfRetries { get; set; } = 3;
+        public int MetThieves { get; set; } = 6;
     }
 }

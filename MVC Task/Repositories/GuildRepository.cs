@@ -24,5 +24,10 @@ namespace MVC_Task.Repositories
         {
             return _context.Guilds.FirstOrDefault(guild => guild.Id == id);
         }
+
+        public Guild GetOneByName(string name)
+        {
+            return _context.Guilds.FirstOrDefault(guild => guild.Name == name);
+        }
     }
 }

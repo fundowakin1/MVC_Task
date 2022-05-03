@@ -16,13 +16,13 @@ namespace MVC_Task.Controllers.GuildsControllers
         }
         public IActionResult WhenChosen(CharacterViewModel character)
         {
-            var assassinsGuild = _unitOfWork.GuildRepository.GetOne(1).Members.ToList();
+            var assassinsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Assassins' Guild").Members.ToList();
             var occupationDictionary = new Dictionary<int, AssassinsViewModel.InfoAboutAssassin>();
             for (var i = 0; i < assassinsGuild.Count; i++)
             {
                 var  higherBound = assassinsGuild[i].MemberInfoEntity.AmountOfMoney;
                 occupationDictionary
-                    .Add(i,new AssassinsViewModel.InfoAboutAssassin(true, higherBound - 10, higherBound));
+                    .Add(i,new AssassinsViewModel.InfoAboutAssassin(false, higherBound - 10, higherBound));
             };
 
             var counter = 0;
@@ -31,7 +31,7 @@ namespace MVC_Task.Controllers.GuildsControllers
                 var random = new Random();
                 var assassinId = random.Next(1, occupationDictionary.Count);
                 if (!occupationDictionary[assassinId].IsOccupied) continue;
-                occupationDictionary[assassinId].IsOccupied = false;
+                occupationDictionary[assassinId].IsOccupied = true;
                 counter++;
             }
 
@@ -54,9 +54,27 @@ namespace MVC_Task.Controllers.GuildsControllers
         public IActionResult InteractionWithAssassinPost(AssassinsViewModel guidAndCharacterInfo)
         {
             var character = guidAndCharacterInfo.Character;
-            character.AmountOfMoney -= guidAndCharacterInfo.InputtedAmountOfMoney;
+            var inputtedMoney = guidAndCharacterInfo.InputtedAmountOfMoney;
             character.AmountOfTurns++;
-            return RedirectToAction("MainGameplay","Gameplay", character);
+            var notOccupiedAssassins =
+                guidAndCharacterInfo.OccupationDictionary.Where(assassin 
+                    => assassin.Value.IsOccupied == false);
+            
+            if (character.NumberOfRetries<=0)
+            {
+                character.HasWon = false;
+                character.IsAlive = false;
+                return RedirectToAction("PlayersDeath", "Player", character);
+            }
+            if (!notOccupiedAssassins.Any(x => x.Value.LowerFeeBound < inputtedMoney
+                                               && x.Value.UpperFeeBound > inputtedMoney))
+            {
+                guidAndCharacterInfo.Character.NumberOfRetries--;
+                return RedirectToAction("InteractionWithAssassin", "Assassins", guidAndCharacterInfo);
+            }
+            character.AmountOfMoney -= inputtedMoney;
+            return RedirectToAction("MainGameplay", "Gameplay", character);
+
         }
     }
 }
