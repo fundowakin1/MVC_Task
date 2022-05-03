@@ -17,12 +17,12 @@ namespace MVC_Task.Controllers.GuildsControllers
         public IActionResult WhenChosen(CharacterViewModel character)
         {
             var assassinsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Assassins' Guild").Members.ToList();
-            var occupationDictionary = new Dictionary<int, AssassinsViewModel.InfoAboutAssassin>();
+            var occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
             for (var i = 0; i < assassinsGuild.Count; i++)
             {
                 var  higherBound = assassinsGuild[i].MemberInfoEntity.AmountOfMoney;
                 occupationDictionary
-                    .Add(i,new AssassinsViewModel.InfoAboutAssassin(false, higherBound - 10, higherBound));
+                    .Add(i,new AssassinViewModel.InfoAboutAssassin(false, higherBound - 10, higherBound));
             };
 
             var counter = 0;
@@ -35,7 +35,7 @@ namespace MVC_Task.Controllers.GuildsControllers
                 counter++;
             }
 
-            var guidAndCharacterInfo = new AssassinsViewModel()
+            var guidAndCharacterInfo = new AssassinViewModel()
             {
                 Character = character,
                 OccupationDictionary = occupationDictionary
@@ -45,13 +45,13 @@ namespace MVC_Task.Controllers.GuildsControllers
 
 
         [HttpGet]
-        public IActionResult InteractionWithAssassin(AssassinsViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassin(AssassinViewModel guidAndCharacterInfo)
         {
             var newGuildAndCharacterInfo = guidAndCharacterInfo;
             return View(newGuildAndCharacterInfo);
         }
         [HttpPost]
-        public IActionResult InteractionWithAssassinPost(AssassinsViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassinPost(AssassinViewModel guidAndCharacterInfo)
         {
             var character = guidAndCharacterInfo.Character;
             var inputtedMoney = guidAndCharacterInfo.InputtedAmountOfMoney;

@@ -2,6 +2,6 @@
 
 <h1>You've met beggar @Model.Beggar.MemberInfoEntity.Name</h1>
 
-
-@Html.ActionLink("Pay him some money", "InteractionWithBeggar", "Beggars",new {Model.Character, Model.Beggar, Model.Beggar.MemberInfoEntity}, new { @class = "btn btn-primary" })
+<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithBeggar", "Beggars", new {Model})'">
+@*@Html.ActionLink("Pay him some money", "InteractionWithBeggar", "Beggars",Model, new { @class = "btn btn-primary" })*@
 <input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">

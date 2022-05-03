@@ -2,7 +2,7 @@
 
 namespace MVC_Task.ViewModels
 {
-    public class AssassinsViewModel
+    public class AssassinViewModel
     {
         public Dictionary<int, InfoAboutAssassin> OccupationDictionary { get; set; }
        
