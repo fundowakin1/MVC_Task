@@ -17,7 +17,7 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             if (character.MetThieves<=0)
             {
-                return RedirectToAction("MainGameplay", "Gameplay", character);
+                return RedirectToAction("EndOfTurn", "Pub", character);
             }
             var thievesGuild = _unitOfWork.GuildRepository.GetOneByName("Guild of Thieves, Cutpurses and Allied Trades").Members.ToList();
             var random = new Random();
@@ -34,7 +34,7 @@ namespace MVC_Task.Controllers.GuildsControllers
             character.AmountOfTurns++;
             character.AmountOfMoney -= character.AmountOfMoneyToInteract;
             if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
-                return RedirectToAction("MainGameplay", "Gameplay", character);
+                return RedirectToAction("EndOfTurn", "Pub", character);
             character.HasWon = false;
             character.IsAlive = false;
             return RedirectToAction("PlayersDeath", "Player", character);

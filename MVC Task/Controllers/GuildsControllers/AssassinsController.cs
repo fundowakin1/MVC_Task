@@ -66,7 +66,7 @@ namespace MVC_Task.Controllers.GuildsControllers
                 return RedirectToAction("InteractionWithAssassin", "Assassins", character);
             }
             character.AmountOfMoney -= inputtedMoney;
-            return RedirectToAction("MainGameplay", "Gameplay", character);
+            return RedirectToAction("EndOfTurn", "Pub", character);
 
         }
     }

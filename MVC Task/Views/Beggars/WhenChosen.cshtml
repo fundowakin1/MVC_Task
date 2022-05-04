@@ -2,6 +2,14 @@
 
 <h1>You've met beggar @Model.Beggar.MemberInfoEntity.Name</h1>
 
-<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithBeggar", "Beggars", Model.Character)'">
+@if (Model.Beggar.MemberInfoEntity.AmountOfMoney==0)
+{
+    <input type="button" value="Give him a pint of beer" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithAlcoholic", "Beggars", Model.Character)'">
+}
+else
+{
+    <input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithBeggar", "Beggars", Model.Character)'">
+}
+
 
 <input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">

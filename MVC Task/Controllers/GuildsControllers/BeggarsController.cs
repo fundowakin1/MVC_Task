@@ -27,10 +27,25 @@ namespace MVC_Task.Controllers.GuildsControllers
         public IActionResult InteractionWithBeggar(CharacterViewModel character)
         {
             character.AmountOfTurns++;
+            
+            
             character.AmountOfMoney -= character.AmountOfMoneyToInteract;
 
             if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
-                return RedirectToAction("MainGameplay", "Gameplay", character);
+                return RedirectToAction("EndOfTurn", "Pub", character);
+            character.HasWon = false;
+            character.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player", character);
+        }
+        public IActionResult InteractionWithAlcoholic(CharacterViewModel character)
+        {
+            character.AmountOfTurns++;
+            if (character.PintsOfBeer>0)
+            {
+                character.PintsOfBeer--;
+                return RedirectToAction("EndOfTurn", "Pub", character);
+            }
+
             character.HasWon = false;
             character.IsAlive = false;
             return RedirectToAction("PlayersDeath", "Player", character);

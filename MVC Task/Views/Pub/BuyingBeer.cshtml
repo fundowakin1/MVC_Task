@@ -1,0 +1,14 @@
+﻿@model MVC_Task.ViewModels.CharacterViewModel
+
+@if (@Model.PintsOfBeer<2)
+{
+    <input type="button" value="Buy a pint of beer for 2 hrn" class="btn btn-danger" onclick="location.href = '@Url.Action("BoughtBeer", "Pub", Model)'">
+}
+else
+{
+    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="You have already enough beer!">
+        <input type="button" value="Buy a pint of beer for 2 hrn" class="btn btn-danger" onclick="location.href = '@Url.Action("BoughtBeer", "Pub", Model)'" disabled="disabled">
+    </span>
+}
+
+<input type="button" value="Leave this place" class="btn btn-danger" onclick="location.href = '@Url.Action("MainGameplay", "Gameplay", Model)'">

@@ -32,6 +32,7 @@ namespace MVC_Task.Controllers
         [HttpPost]
         public IActionResult CreateCharacter(CharacterViewModel character)
         {
+            character.AmountOfMoney = 100;
             return RedirectToAction("MainGameplay", "Gameplay", character);
         }
 

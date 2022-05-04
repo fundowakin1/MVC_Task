@@ -28,7 +28,7 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             character.AmountOfTurns++;
             character.AmountOfMoney += character.AmountOfMoneyToInteract;
-            return RedirectToAction("MainGameplay", "Gameplay", character);
+            return RedirectToAction("EndOfTurn", "Pub", character);
         }
     }
 }

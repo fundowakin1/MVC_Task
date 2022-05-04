@@ -2,12 +2,11 @@
 
 namespace MVC_Task.Controllers
 {
-    public class HomeController : Controller
+    public class SpecialMemberController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-
     }
 }
