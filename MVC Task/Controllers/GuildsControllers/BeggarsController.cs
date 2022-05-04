@@ -20,21 +20,20 @@ namespace MVC_Task.Controllers.GuildsControllers
             var random = new Random();
             var chosenMemberId = random.Next(0, beggarsGuild.Count);
             var beggar = beggarsGuild[chosenMemberId];
-            var guidAndCharacterInfo = new BeggarViewModel(){Beggar = beggar, Character = character};
+            character.AmountOfMoneyToInteract = beggar.MemberInfoEntity.AmountOfMoney;
+            var guidAndCharacterInfo = new BeggarViewModel() {Beggar = beggar, Character = character};
             return View(guidAndCharacterInfo);
         }
-        public IActionResult InteractionWithBeggar(CharacterViewModel character, Member member, MemberInfo memberInfo)
+        public IActionResult InteractionWithBeggar(CharacterViewModel character)
         {
-            var _character = character;
             character.AmountOfTurns++;
-            var beggar = member;
-            var money = character.AmountOfMoney -= memberInfo.AmountOfMoney;
+            character.AmountOfMoney -= character.AmountOfMoneyToInteract;
 
-            if (character.NumberOfRetries > 0 && money > 0)
-                return RedirectToAction("MainGameplay", "Gameplay", _character);
-            _character.HasWon = false;
-            _character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", _character);
+            if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
+                return RedirectToAction("MainGameplay", "Gameplay", character);
+            character.HasWon = false;
+            character.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player", character);
         }
     }
 }

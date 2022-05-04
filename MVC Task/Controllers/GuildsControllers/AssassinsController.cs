@@ -9,6 +9,7 @@ namespace MVC_Task.Controllers.GuildsControllers
 {
     public class AssassinsController : Controller 
     {
+        private static Dictionary<int, AssassinViewModel.InfoAboutAssassin> _occupationDictionary;
         private IUnitOfWork _unitOfWork;
         public AssassinsController(IUnitOfWork unitOfWork)
         {
@@ -17,49 +18,41 @@ namespace MVC_Task.Controllers.GuildsControllers
         public IActionResult WhenChosen(CharacterViewModel character)
         {
             var assassinsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Assassins' Guild").Members.ToList();
-            var occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
+            _occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
             for (var i = 0; i < assassinsGuild.Count; i++)
             {
                 var  higherBound = assassinsGuild[i].MemberInfoEntity.AmountOfMoney;
-                occupationDictionary
+                _occupationDictionary
                     .Add(i,new AssassinViewModel.InfoAboutAssassin(false, higherBound - 10, higherBound));
             };
 
             var counter = 0;
-            while (counter < occupationDictionary.Count / 2)
+            while (counter < _occupationDictionary.Count / 2)
             {
                 var random = new Random();
-                var assassinId = random.Next(1, occupationDictionary.Count);
-                if (!occupationDictionary[assassinId].IsOccupied) continue;
-                occupationDictionary[assassinId].IsOccupied = true;
+                var assassinId = random.Next(0, _occupationDictionary.Count);
+                if (_occupationDictionary[assassinId].IsOccupied) continue;
+                _occupationDictionary[assassinId].IsOccupied = true;
                 counter++;
             }
 
-            var guidAndCharacterInfo = new AssassinViewModel()
-            {
-                Character = character,
-                OccupationDictionary = occupationDictionary
-            };
-            return View(guidAndCharacterInfo);
+            return View(character);
         }
 
 
         [HttpGet]
-        public IActionResult InteractionWithAssassin(AssassinViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassin(CharacterViewModel character)
         {
-            var newGuildAndCharacterInfo = guidAndCharacterInfo;
-            return View(newGuildAndCharacterInfo);
+            return View(character);
         }
         [HttpPost]
-        public IActionResult InteractionWithAssassinPost(AssassinViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassinPost(CharacterViewModel character)
         {
-            var character = guidAndCharacterInfo.Character;
-            var inputtedMoney = guidAndCharacterInfo.InputtedAmountOfMoney;
             character.AmountOfTurns++;
             var notOccupiedAssassins =
-                guidAndCharacterInfo.OccupationDictionary.Where(assassin 
+                _occupationDictionary.Where(assassin 
                     => assassin.Value.IsOccupied == false);
-            
+            var inputtedMoney = character.AmountOfMoneyToInteract;
             if (character.NumberOfRetries<=0)
             {
                 character.HasWon = false;
@@ -69,8 +62,8 @@ namespace MVC_Task.Controllers.GuildsControllers
             if (!notOccupiedAssassins.Any(x => x.Value.LowerFeeBound < inputtedMoney
                                                && x.Value.UpperFeeBound > inputtedMoney))
             {
-                guidAndCharacterInfo.Character.NumberOfRetries--;
-                return RedirectToAction("InteractionWithAssassin", "Assassins", guidAndCharacterInfo);
+               character.NumberOfRetries--;
+                return RedirectToAction("InteractionWithAssassin", "Assassins", character);
             }
             character.AmountOfMoney -= inputtedMoney;
             return RedirectToAction("MainGameplay", "Gameplay", character);

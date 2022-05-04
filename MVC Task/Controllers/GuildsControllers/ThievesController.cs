@@ -24,17 +24,16 @@ namespace MVC_Task.Controllers.GuildsControllers
             var chosenMemberId = random.Next(0, thievesGuild.Count);
             var thieve = thievesGuild[chosenMemberId];
             character.MetThieves--;
+            character.AmountOfMoneyToInteract = thieve.MemberInfoEntity.AmountOfMoney;
             var guidAndCharacterInfo = new ThiefViewModel() { Thief = thieve, Character = character };
             return View(guidAndCharacterInfo);
         }
         
-        public IActionResult InteractionWithThief(ThiefViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithThief(CharacterViewModel character)
         {
-            var character = guidAndCharacterInfo.Character;
             character.AmountOfTurns++;
-            var thief = guidAndCharacterInfo.Thief;
-            var money = character.AmountOfMoney -= thief.MemberInfoEntity.AmountOfMoney;
-            if (character.NumberOfRetries > 0 && money > 0)
+            character.AmountOfMoney -= character.AmountOfMoneyToInteract;
+            if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
                 return RedirectToAction("MainGameplay", "Gameplay", character);
             character.HasWon = false;
             character.IsAlive = false;

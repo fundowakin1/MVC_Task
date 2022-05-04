@@ -15,18 +15,17 @@ namespace MVC_Task.Controllers
         }
         public IActionResult MainGameplay(CharacterViewModel character)
         {
-            return RedirectToAction("WhenChosen", "Beggars", character);
-            //var numberOfGuilds = _unitOfWork.GuildRepository.GetAll().Count();
-            //var r = new Random();
-            //var chosenGuild = r.Next(0, numberOfGuilds);
-            //return chosenGuild switch
-            //{
-            //    0 => RedirectToAction("WhenChosen", "Assassins", character),
-            //    1 => RedirectToAction("WhenChosen", "Thieves", character),
-            //    2 => RedirectToAction("WhenChosen", "Beggars", character),
-            //    3 => RedirectToAction("WhenChosen", "Fools", character),
-            //    _ => View()
-            //};
+            var numberOfGuilds = _unitOfWork.GuildRepository.GetAll().Count();
+            var r = new Random();
+            var chosenGuild = r.Next(0, numberOfGuilds);
+            return chosenGuild switch
+            {
+                0 => RedirectToAction("WhenChosen", "Assassins", character),
+                1 => RedirectToAction("WhenChosen", "Thieves", character),
+                2 => RedirectToAction("WhenChosen", "Beggars", character),
+                3 => RedirectToAction("WhenChosen", "Fools", character),
+                _ => View()
+            };
         }
     }
 }

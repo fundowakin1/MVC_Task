@@ -19,17 +19,16 @@ namespace MVC_Task.Controllers.GuildsControllers
             var random = new Random();
             var chosenMemberId = random.Next(0, foolsGuild.Count);
             var fool = foolsGuild[chosenMemberId];
+            character.AmountOfMoneyToInteract = fool.MemberInfoEntity.AmountOfMoney;
             var guidAndCharacterInfo = new FoolViewModel() { Fool = fool, Character = character };
             return View(guidAndCharacterInfo);
         }
 
-        public IActionResult InteractionWithThief(FoolViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithFool(CharacterViewModel character)
         {
-            var character = guidAndCharacterInfo.Character;
             character.AmountOfTurns++;
-            character.AmountOfMoney += guidAndCharacterInfo.Fool.MemberInfoEntity.AmountOfMoney;
+            character.AmountOfMoney += character.AmountOfMoneyToInteract;
             return RedirectToAction("MainGameplay", "Gameplay", character);
-           
         }
     }
 }
