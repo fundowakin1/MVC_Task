@@ -15,7 +15,7 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var assassinsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Assassins' Guild").Members.ToList();
             _occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
@@ -36,37 +36,37 @@ namespace MVC_Task.Controllers.GuildsControllers
                 counter++;
             }
 
-            return View(character);
+            return View();
         }
 
 
         [HttpGet]
-        public IActionResult InteractionWithAssassin(CharacterViewModel character)
+        public IActionResult InteractionWithAssassin()
         {
-            return View(character);
+            return View();
         }
         [HttpPost]
-        public IActionResult InteractionWithAssassinPost(CharacterViewModel character)
+        public IActionResult InteractionWithAssassinPost(decimal amountOfMoneyToInteract)
         {
-            character.AmountOfTurns++;
+            CharacterViewModel.AmountOfTurns++;
             var notOccupiedAssassins =
                 _occupationDictionary.Where(assassin 
                     => assassin.Value.IsOccupied == false);
-            var inputtedMoney = character.AmountOfMoneyToInteract;
-            if (character.NumberOfRetries<=0)
+            var inputtedMoney = amountOfMoneyToInteract;
+            if (CharacterViewModel.NumberOfRetries<=0)
             {
-                character.HasWon = false;
-                character.IsAlive = false;
-                return RedirectToAction("PlayersDeath", "Player", character);
+                CharacterViewModel.HasWon = false;
+                CharacterViewModel.IsAlive = false;
+                return RedirectToAction("PlayersDeath", "Player");
             }
             if (!notOccupiedAssassins.Any(x => x.Value.LowerFeeBound < inputtedMoney
                                                && x.Value.UpperFeeBound > inputtedMoney))
             {
-               character.NumberOfRetries--;
-                return RedirectToAction("InteractionWithAssassin", "Assassins", character);
+                CharacterViewModel.NumberOfRetries--;
+                return RedirectToAction("InteractionWithAssassin", "Assassins");
             }
-            character.AmountOfMoney -= inputtedMoney;
-            return RedirectToAction("EndOfTurn", "Pub", character);
+            CharacterViewModel.AmountOfMoney -= inputtedMoney;
+            return RedirectToAction("EndOfTurn", "Pub");
 
         }
     }

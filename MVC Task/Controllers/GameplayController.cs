@@ -13,17 +13,17 @@ namespace MVC_Task.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult MainGameplay(CharacterViewModel character)
+        public IActionResult MainGameplay()
         {
             var numberOfGuilds = _unitOfWork.GuildRepository.GetAll().Count();
             var r = new Random();
             var chosenGuild = r.Next(0, numberOfGuilds);
             return chosenGuild switch
             {
-                0 => RedirectToAction("WhenChosen", "Assassins", character),
-                1 => RedirectToAction("WhenChosen", "Thieves", character),
-                2 => RedirectToAction("WhenChosen", "Beggars", character),
-                3 => RedirectToAction("WhenChosen", "Fools", character),
+                0 => RedirectToAction("WhenChosen", "Assassins"),
+                1 => RedirectToAction("WhenChosen", "Thieves"),
+                2 => RedirectToAction("WhenChosen", "Beggars"),
+                3 => RedirectToAction("WhenChosen", "Fools"),
                 _ => View()
             };
         }

@@ -1,7 +1,19 @@
-﻿@model MVC_Task.ViewModels.ThiefViewModel
+﻿@using MVC_Task.ViewModels
+@model MVC_Task.ViewModels.ThiefViewModel
 
 <h1>You've met thief @Model.Thief.MemberInfoEntity.Name</h1>
 
-<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithThief", "Thieves", Model.Character)'">
-<input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">
-
+<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithThief", "Thieves")'">
+<input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">
+@if ((Model.Thief.MemberInfoEntity.IsMage && Model.Thief.MemberInfoEntity.IsMage)&&@CharacterViewModel.Race is "Elven" or "Vampire")
+{
+    <input type="button" value="Vampire mage" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMageMember", "SpecialMember")'">
+}
+else if (Model.Thief.MemberInfoEntity.IsMage && @CharacterViewModel.Race=="Vampire")
+{
+    <input type="button" value="Vampire" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMember", "SpecialMember")'">
+}
+else if (Model.Thief.MemberInfoEntity.IsMage && @CharacterViewModel.Race=="Elven")
+{
+    <input type="button" value="Mage" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithMageMember", "SpecialMember")'">
+}

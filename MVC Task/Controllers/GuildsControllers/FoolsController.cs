@@ -13,22 +13,22 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var foolsGuild = _unitOfWork.GuildRepository.GetOneByName("The Guild of Fools and Joculators and College of Clowns").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, foolsGuild.Count);
             var fool = foolsGuild[chosenMemberId];
-            character.AmountOfMoneyToInteract = fool.MemberInfoEntity.AmountOfMoney;
-            var guidAndCharacterInfo = new FoolViewModel() { Fool = fool, Character = character };
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.AmountOfMoneyToInteract = fool.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new FoolViewModel() { Fool = fool};
+            return View(guidInfo);
         }
 
-        public IActionResult InteractionWithFool(CharacterViewModel character)
+        public IActionResult InteractionWithFool()
         {
-            character.AmountOfTurns++;
-            character.AmountOfMoney += character.AmountOfMoneyToInteract;
-            return RedirectToAction("EndOfTurn", "Pub", character);
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.AmountOfMoney += CharacterViewModel.AmountOfMoneyToInteract;
+            return RedirectToAction("EndOfTurn", "Pub");
         }
     }
 }

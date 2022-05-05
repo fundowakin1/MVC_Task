@@ -14,41 +14,42 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var beggarsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Beggars' Guild").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, beggarsGuild.Count);
             var beggar = beggarsGuild[chosenMemberId];
-            character.AmountOfMoneyToInteract = beggar.MemberInfoEntity.AmountOfMoney;
-            var guidAndCharacterInfo = new BeggarViewModel() {Beggar = beggar, Character = character};
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.AmountOfMoneyToInteract = beggar.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new BeggarViewModel() {Beggar = beggar};
+            return View(guidInfo);
         }
-        public IActionResult InteractionWithBeggar(CharacterViewModel character)
+        public IActionResult InteractionWithBeggar()
         {
-            character.AmountOfTurns++;
-            
-            
-            character.AmountOfMoney -= character.AmountOfMoneyToInteract;
+            CharacterViewModel.AmountOfTurns++;
 
-            if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
-                return RedirectToAction("EndOfTurn", "Pub", character);
-            character.HasWon = false;
-            character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", character);
+            CharacterViewModel.AmountOfMoney -= CharacterViewModel.AmountOfMoneyToInteract;
+
+            if (CharacterViewModel.NumberOfRetries > 0 && CharacterViewModel.AmountOfMoney > 0)
+                return RedirectToAction("EndOfTurn", "Pub");
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
         }
-        public IActionResult InteractionWithAlcoholic(CharacterViewModel character)
+        public IActionResult InteractionWithAlcoholic()
         {
-            character.AmountOfTurns++;
-            if (character.PintsOfBeer>0)
+            CharacterViewModel.AmountOfTurns++;
+            if (CharacterViewModel.PintsOfBeer>0)
             {
-                character.PintsOfBeer--;
-                return RedirectToAction("EndOfTurn", "Pub", character);
+                CharacterViewModel.PintsOfBeer--;
+                return RedirectToAction("EndOfTurn", "Pub");
             }
 
-            character.HasWon = false;
-            character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", character);
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
         }
+
+        
     }
 }

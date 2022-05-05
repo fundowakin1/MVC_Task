@@ -6,20 +6,20 @@ namespace MVC_Task.Controllers
     public class PubController : Controller
     {
         private const int _beerCost = 2;
-        public IActionResult EndOfTurn(CharacterViewModel character)
+        public IActionResult EndOfTurn()
         {
-            return View(character);
+            return View();
         }
         
-        public IActionResult BuyingBeer(CharacterViewModel character)
+        public IActionResult BuyingBeer()
         {
-            return View(character);
+            return View();
         }
-        public IActionResult BoughtBeer(CharacterViewModel character)
+        public IActionResult BoughtBeer()
         {
-            character.AmountOfMoney -= _beerCost;
-            character.PintsOfBeer++;
-            return RedirectToAction("MainGameplay", "Gameplay", character);
+            CharacterViewModel.AmountOfMoney -= _beerCost;
+            CharacterViewModel.PintsOfBeer++;
+            return RedirectToAction("MainGameplay", "Gameplay");
         }
     }
 }

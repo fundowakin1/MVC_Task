@@ -13,31 +13,31 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
-            if (character.MetThieves<=0)
+            if (CharacterViewModel.MetThieves<=0)
             {
-                return RedirectToAction("EndOfTurn", "Pub", character);
+                return RedirectToAction("EndOfTurn", "Pub");
             }
             var thievesGuild = _unitOfWork.GuildRepository.GetOneByName("Guild of Thieves, Cutpurses and Allied Trades").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, thievesGuild.Count);
             var thieve = thievesGuild[chosenMemberId];
-            character.MetThieves--;
-            character.AmountOfMoneyToInteract = thieve.MemberInfoEntity.AmountOfMoney;
-            var guidAndCharacterInfo = new ThiefViewModel() { Thief = thieve, Character = character };
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.MetThieves--;
+            CharacterViewModel.AmountOfMoneyToInteract = thieve.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new ThiefViewModel() { Thief = thieve};
+            return View(guidInfo);
         }
         
-        public IActionResult InteractionWithThief(CharacterViewModel character)
+        public IActionResult InteractionWithThief()
         {
-            character.AmountOfTurns++;
-            character.AmountOfMoney -= character.AmountOfMoneyToInteract;
-            if (character.NumberOfRetries > 0 && character.AmountOfMoney > 0)
-                return RedirectToAction("EndOfTurn", "Pub", character);
-            character.HasWon = false;
-            character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", character);
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.AmountOfMoney -= CharacterViewModel.AmountOfMoneyToInteract;
+            if (CharacterViewModel.NumberOfRetries > 0 && CharacterViewModel.AmountOfMoney > 0)
+                return RedirectToAction("EndOfTurn", "Pub");
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
         }
 
 
