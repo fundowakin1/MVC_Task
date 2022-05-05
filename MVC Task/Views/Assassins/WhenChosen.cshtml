@@ -1,11 +1,15 @@
 ﻿@using MVC_Task.Resources
+@using MVC_Task.ViewModels
 
-
+<div>
+    <p>@CharacterViewModel.FormatMoney()</p>
+    <p>Pints of beer: @CharacterViewModel.PintsOfBeer</p>
+</div>
 <div class="text-center">
-    
+    <h2>@Messages.AssassinGreeting</h2>
     <img src="/Images/Assassin.jpg"  width="500" height="700" alt="Assassin image"/>
-    <h1>@Messages.AssassinGreeting</h1>
+    <h2>You can pay some money to hire an assassin for your protection or you can pray for your life</h2>
 
-    <button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("InteractionWithAssassin", "Assassins")'">Pay guild some money</button>
-    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
+    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithAssassin", "Assassins")'">Pay guild some money</button>
+    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Pray for life</button>
 </div>

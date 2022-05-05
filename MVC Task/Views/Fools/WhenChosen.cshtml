@@ -2,23 +2,27 @@
 @using MVC_Task.Resources
 @model MVC_Task.ViewModels.FoolViewModel
 
-
+<div>
+    <p>@CharacterViewModel.FormatMoney()</p>
+    <p>Pints of beer: @CharacterViewModel.PintsOfBeer</p>
+</div>
 <div class="text-center">
+    <h2>@Messages.FoolGreeting @Model.Fool.MemberInfoEntity.Name</h2>
     <img src="/Images/Fool.jpg" width="500" height="700" alt="Fool image"/>
-    <h1>@Messages.FoolGreeting @Model.Fool.MemberInfoEntity.Name</h1>
+    <h2>Greetings, can you help me with some stuff... My partner clown-Jack is sick, can you replace him today?</h2>
 
     <input type="button" value="Help him" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithFool", "Fools")'">
-    <input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("FoolDenial", "Fools")'">
+    <input type="button" value="Go away" class="btn btn-danger" onclick="location.href = '@Url.Action("FoolDenial", "Fools")'">
     @if ((Model.Fool.MemberInfoEntity.IsMage && Model.Fool.MemberInfoEntity.IsMage) && @CharacterViewModel.Race is "Elven" or "Vampire")
     {
-        <input type="button" value="Vampire mage" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMageMember", "SpecialMember")'">
+        <input type="button" value="You feel strange power..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMageMember", "SpecialMember")'">
     }
     else if (Model.Fool.MemberInfoEntity.IsVampire && @CharacterViewModel.Race == "Vampire")
     {
-        <input type="button" value="Vampire" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMember", "SpecialMember")'">
+        <input type="button" value="You feel strange smell..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMember", "SpecialMember")'">
     }
     else if (Model.Fool.MemberInfoEntity.IsMage && @CharacterViewModel.Race == "Elven")
     {
-        <input type="button" value="Mage" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithMageMember", "SpecialMember")'">
+        <input type="button" value="You feel strange power..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithMageMember", "SpecialMember")'">
     }
 </div>

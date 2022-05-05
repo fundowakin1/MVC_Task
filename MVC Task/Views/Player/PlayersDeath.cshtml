@@ -1,11 +1,24 @@
 ﻿@using MVC_Task.ViewModels
 
+
+@switch (CharacterViewModel.NpcMet)
+{
+    case "Assassin":
+        <h2>A sharp assassin's blade pierces your heart...</h2>
+        break;
+    case "Beggar":
+        <h2>It was a mistake not to give him money, a bunch of beggars chased you to death...</h2>
+        break;
+    case "Thief":
+        <h2>He took your money and your life(</h2>
+        break;
+}
 <div class="text-center">
-    <h1>@CharacterViewModel.Name</h1>
-    <h2>@CharacterViewModel.Race</h2>
+    <h1>Name: @CharacterViewModel.Name</h1>
+    <h2>Race: @CharacterViewModel.Race</h2>
     <h2>Ending: Lost</h2>
     <h2>Status: Dead</h2>
-    <h2>Money: @CharacterViewModel.AmountOfMoney</h2>
+    <h2>Money: @CharacterViewModel.FormatMoney()</h2>
     <h2>Turns: @CharacterViewModel.AmountOfTurns</h2>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="location.href = '@Url.Action("ShowScoreTable", "Player")'">Score table</button>
 </div>

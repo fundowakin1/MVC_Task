@@ -1,12 +1,17 @@
 ﻿@using MVC_Task.ViewModels
 @model decimal
 
+<div>
+    <p>@CharacterViewModel.FormatMoney()</p>
+    <p>Pints of beer: @CharacterViewModel.PintsOfBeer</p>
+</div>
 
 <div class="text-center">
-    <form asp-action="InteractionWithAssassinPost" asp-controller="Assassins" class="row row-cols-lg-auto g-3 align-items-center">
-        <label class="form-label">Pick the amount of money to hire assassin</label>
-        @Html.TextBoxFor(model => model, new{type="number",min="1", max=@CharacterViewModel.AmountOfMoney, name = "amountOfMoneyToInteract"})
-        <button type="submit" class="btn btn-check btn-lg btn-block btn-danger">Hire the assassin</button>
+    <img src="/Images/AssassinsGuild.jpg" width="1000" height="500"/>
+    <form asp-action="InteractionWithAssassinPost" asp-controller="Assassins" class="row row-cols-lg-auto g-3 align-items-center" style="display: inline">
+        <label class="form-label h4">Pick the amount of money to hire assassin</label>
+        @Html.TextBoxFor(model => model, new {type = "number", min = "1", max = @CharacterViewModel.AmountOfMoney, name = "amountOfMoneyToInteract"})
+        <button type="submit" class="btn btn-check btn-danger">Hire the assassin</button>
+        <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
     </form>
-    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
 </div>

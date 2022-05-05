@@ -1,10 +1,10 @@
 ﻿@model MVC_Task.ViewModels.PlayerFullInfoViewModel
 
 
-<div class="text-center">
-    <table class="table">
+<div class="text-center" style="color: aliceblue">
+    <table class="table" style="color: aliceblue">
         <thead>
-        <tr>
+        <tr style="color: aliceblue">
             <th scope="col">№</th>
             <th scope="col">Name</th>
             <th scope="col">Number of turns</th>
@@ -17,11 +17,11 @@
         @for (var i =0; i<@Model.Players.Count(); i++)
         {
             <tr>
-                <th scope="row">@(i+1) </th>
-                <td>@Model.PlayersInfo[i].Name</td>
-                <td>@Model.Players[i].AmountOfTurns</td>
-                <td>@Model.PlayersInfo[i].Race</td>
-                <td>@if (@Model.Players[i].IsAlive)
+                <th scope="row" style="color: aliceblue">@(i+1) </th>
+                <td style="color: aliceblue">@Model.PlayersInfo[i].Name</td>
+                <td style="color: aliceblue">@Model.Players[i].AmountOfTurns</td>
+                <td style="color: aliceblue">@Model.PlayersInfo[i].Race</td>
+                <td style="color: aliceblue">@if (@Model.Players[i].IsAlive)
                     {
                         <p>Alive</p>
                     }
@@ -34,5 +34,4 @@
         </tbody>
     </table>
     <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork again</button>
-
 </div>
