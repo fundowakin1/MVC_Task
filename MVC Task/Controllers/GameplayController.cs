@@ -2,7 +2,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Task.UOW;
-using MVC_Task.ViewModels;
 
 namespace MVC_Task.Controllers
 {

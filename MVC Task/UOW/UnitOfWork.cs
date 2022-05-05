@@ -15,6 +15,12 @@ namespace MVC_Task.UOW
             _guildContext = guildContext;
         }
 
+        public void ResetGuildDb()
+        {
+            _guildContext.Database.EnsureDeleted();
+            _guildContext.Database.EnsureCreated();
+        }
+
         private IGuildRepository _guildRepository;
         private IMemberRepository _memberRepository;
         private IMemberInfoRepository _memberInfoRepository;

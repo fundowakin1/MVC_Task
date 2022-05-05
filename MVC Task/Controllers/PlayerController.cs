@@ -31,6 +31,7 @@ namespace MVC_Task.Controllers
         [HttpPost]
         public IActionResult CreateCharacter(CreateCharacterViewModel character)
         {
+            _unitOfWork.ResetGuildDb();
             CharacterViewModel.Race = character.Race;
             CharacterViewModel.AmountOfMoney = character.Race == "Elven" ? 150 : 100;
             CharacterViewModel.AmountOfMoneyToInteract = 0;

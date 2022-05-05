@@ -1,34 +1,38 @@
 ﻿@model MVC_Task.ViewModels.PlayerFullInfoViewModel
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">№</th>
-        <th scope="col">Name</th>
-        <th scope="col">Number of turns</th>
-        <th scope="col">Race</th>
-        <th scope="col">Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-    @for (var i =0; i<@Model.Players.Count(); i++)
-    {
+
+<div class="text-center">
+    <table class="table">
+        <thead>
         <tr>
-            <th scope="row">@(i+1) </th>
-            <td>@Model.PlayersInfo[i].Name</td>
-            <td>@Model.Players[i].AmountOfTurns</td>
-            <td>@Model.PlayersInfo[i].Race</td>
-            <td>@if (@Model.Players[i].IsAlive)
-                {
-                    <p>Alive</p>
-                }
-                else
-                {
-                    <p>Dead</p>
-                }</td>
+            <th scope="col">№</th>
+            <th scope="col">Name</th>
+            <th scope="col">Number of turns</th>
+            <th scope="col">Race</th>
+            <th scope="col">Status</th>
         </tr>
-    }
-    </tbody>
-</table>
-<button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork again</button>
+        </thead>
+        <tbody>
+    
+        @for (var i =0; i<@Model.Players.Count(); i++)
+        {
+            <tr>
+                <th scope="row">@(i+1) </th>
+                <td>@Model.PlayersInfo[i].Name</td>
+                <td>@Model.Players[i].AmountOfTurns</td>
+                <td>@Model.PlayersInfo[i].Race</td>
+                <td>@if (@Model.Players[i].IsAlive)
+                    {
+                        <p>Alive</p>
+                    }
+                    else
+                    {
+                        <p>Dead</p>
+                    }</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork again</button>
+
+</div>

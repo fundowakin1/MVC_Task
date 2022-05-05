@@ -1,19 +1,25 @@
 ﻿@using MVC_Task.ViewModels
 
-@switch (@CharacterViewModel.SpecialNpcMet)
-{
-    case "Vampire":
-        <h1>Defeated vampire</h1>
-        break;
-    case "Mage":
-        <h1>Defeated mage</h1>
-        break;
-}
 
-<h1>@CharacterViewModel.Name</h1>
-<h2>@CharacterViewModel.Race</h2>
-<h2>Ending: Won</h2>
-<h2>Status: Alive</h2>
-<h2>Money: @CharacterViewModel.AmountOfMoney</h2>
-<h2>Turns: @CharacterViewModel.AmountOfTurns</h2>
-<button type="button" class="btn btn-success btn-lg btn-block" onclick="location.href = '@Url.Action("ShowScoreTable", "Player")'">Score table</button>
+<div class="text-center">
+    @switch (@CharacterViewModel.SpecialNpcMet)
+    {
+        case "Vampire":
+            <h1>Defeated vampire</h1>
+            <img src="/Images/VampireEnding.png" alt="vampire" width="500" height="700">
+            break;
+        case "Mage":
+            <h1>Defeated mage</h1>
+            <img src="/Images/MageEnding.jpg" alt="vampire" width="1000" height="700">
+            break;
+    }
+
+    <h1>@CharacterViewModel.Name</h1>
+    <h2>@CharacterViewModel.Race</h2>
+    <h2>Ending: Won</h2>
+    <h2>Status: Alive</h2>
+    <h2>Money: @CharacterViewModel.AmountOfMoney</h2>
+    <h2>Turns: @CharacterViewModel.AmountOfTurns</h2>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="location.href = '@Url.Action("ShowScoreTable", "Player")'">Score table</button>
+
+</div>

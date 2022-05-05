@@ -29,7 +29,7 @@ namespace MVC_Task.Controllers.GuildsControllers
             CharacterViewModel.AmountOfTurns++;
 
             CharacterViewModel.AmountOfMoney -= CharacterViewModel.AmountOfMoneyToInteract;
-
+            CharacterViewModel.NpcMet = "Beggar";
             if (CharacterViewModel.NumberOfRetries > 0 && CharacterViewModel.AmountOfMoney > 0)
                 return RedirectToAction("EndOfTurn", "Pub");
             CharacterViewModel.HasWon = false;
@@ -39,6 +39,7 @@ namespace MVC_Task.Controllers.GuildsControllers
         public IActionResult InteractionWithAlcoholic()
         {
             CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.NpcMet = "Beggar";
             if (CharacterViewModel.PintsOfBeer>0)
             {
                 CharacterViewModel.PintsOfBeer--;

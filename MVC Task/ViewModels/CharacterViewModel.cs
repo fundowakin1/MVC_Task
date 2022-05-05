@@ -17,5 +17,6 @@ namespace MVC_Task.ViewModels
         public static int MetThieves { get; set; }
         public static int PintsOfBeer { get; set; }
         public static string SpecialNpcMet { get; set; }
+        public static string NpcMet { get; set; }
     }
 }

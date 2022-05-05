@@ -28,6 +28,13 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             CharacterViewModel.AmountOfTurns++;
             CharacterViewModel.AmountOfMoney += CharacterViewModel.AmountOfMoneyToInteract;
+            CharacterViewModel.NpcMet = "Fool";
+            return RedirectToAction("EndOfTurn", "Pub");
+        }
+        public IActionResult FoolDenial()
+        {
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.NpcMet = "FoolDenied";
             return RedirectToAction("EndOfTurn", "Pub");
         }
     }

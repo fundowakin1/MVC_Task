@@ -1,4 +1,11 @@
-﻿
-<h1>You have met an assassin</h1>
-<button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("InteractionWithAssassin", "Assassins")'">Pay guild some money</button>
-<button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
+﻿@using MVC_Task.Resources
+
+
+<div class="text-center">
+    
+    <img src="/Images/Assassin.jpg"  width="500" height="700" alt="Assassin image"/>
+    <h1>@Messages.AssassinGreeting</h1>
+
+    <button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("InteractionWithAssassin", "Assassins")'">Pay guild some money</button>
+    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
+</div>

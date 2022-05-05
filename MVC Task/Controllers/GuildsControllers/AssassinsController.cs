@@ -53,6 +53,7 @@ namespace MVC_Task.Controllers.GuildsControllers
                 _occupationDictionary.Where(assassin 
                     => assassin.Value.IsOccupied == false);
             var inputtedMoney = amountOfMoneyToInteract;
+            CharacterViewModel.NpcMet = "Assassin";
             if (CharacterViewModel.NumberOfRetries<=0)
             {
                 CharacterViewModel.HasWon = false;

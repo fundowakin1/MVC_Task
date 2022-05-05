@@ -9,5 +9,6 @@ namespace MVC_Task.UOW
         public IMemberInfoRepository MemberInfoRepository { get;}
         public IPlayerRepository PlayerRepository { get;}
         public IPlayerInfoRepository PlayerInfoRepository { get; }
+        public void ResetGuildDb();
     }
 }

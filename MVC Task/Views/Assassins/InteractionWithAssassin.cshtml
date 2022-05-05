@@ -2,10 +2,11 @@
 @model decimal
 
 
-
-<form asp-action="InteractionWithAssassinPost" asp-controller="Assassins" class="row row-cols-lg-auto g-3 align-items-center">
-    <label class="form-label">Pick the amount of money to hire assassin</label>
-    @Html.TextBoxFor(model => model, new{type="number",min="1", max=@CharacterViewModel.AmountOfMoney, name = "amountOfMoneyToInteract"})
-    <button type="submit" class="btn btn-check btn-lg btn-block">Hire the assassin</button>
-</form>
-<button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
+<div class="text-center">
+    <form asp-action="InteractionWithAssassinPost" asp-controller="Assassins" class="row row-cols-lg-auto g-3 align-items-center">
+        <label class="form-label">Pick the amount of money to hire assassin</label>
+        @Html.TextBoxFor(model => model, new{type="number",min="1", max=@CharacterViewModel.AmountOfMoney, name = "amountOfMoneyToInteract"})
+        <button type="submit" class="btn btn-check btn-lg btn-block btn-danger">Hire the assassin</button>
+    </form>
+    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">Reject the proposal</button>
+</div>

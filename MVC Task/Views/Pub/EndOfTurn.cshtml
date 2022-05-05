@@ -1,4 +1,22 @@
-﻿
-<input type="button" value="Enter the pub" class="btn btn-danger" onclick="location.href = '@Url.Action("BuyingBeer", "Pub")'">
+﻿@using MVC_Task.ViewModels
+@using MVC_Task.Resources
 
-<input type="button" value="Move along" class="btn btn-danger" onclick="location.href = '@Url.Action("MainGameplay", "Gameplay")'">
+
+<div class="text-center">
+    @switch (CharacterViewModel.NpcMet)
+    {
+        case "Fool":
+            <h1>@Messages.FoolHelpedResult</h1>break;
+        case "FoolDenied":
+            <h1>@Messages.FoolDeniedResult</h1>break;
+        case "Assassin":
+            <h1>@Messages.AssassinResult</h1>break;
+        case "Beggar":
+            <h1>@Messages.BeggarResult</h1>break; 
+        case "Thief":
+            <h1>@Messages.ThiefResult</h1>break;
+    }
+
+    <input type="button" value="Enter the pub" class="btn btn-danger" onclick="location.href = '@Url.Action("BuyingBeer", "Pub")'">
+    <input type="button" value="Move along" class="btn btn-danger" onclick="location.href = '@Url.Action("MainGameplay", "Gameplay")'">
+</div>
