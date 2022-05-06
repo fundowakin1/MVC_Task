@@ -1,0 +1,24 @@
+﻿@using MVC_Task.ViewModels
+
+<div>
+    <p>@CharacterViewModel.FormatMoney()</p>
+    <p>Pints of beer: @CharacterViewModel.PintsOfBeer</p>
+</div>
+<div  class="text-center">
+    <img src="/Images/Beer.jpg" width="500" height="600"/>
+</div>
+
+<div class="text-center">
+    <h2>You can buy some beer, everyone have just this drink here. Strange...</h2>
+    @if (@CharacterViewModel.PintsOfBeer < 2)
+    {
+        <input type="button" value="Buy a pint of beer for 2 hrn" class="btn btn-danger" onclick="location.href = '@Url.Action("BoughtBeer", "Pub")'">
+    }
+    else
+    {
+        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="You have already enough beer!">
+            <input type="button" value="Buy a pint of beer for 2 hrn" class="btn btn-danger" onclick="location.href = '@Url.Action("BoughtBeer", "Pub")'" disabled="disabled">
+        </span>
+    }
+    <input type="button" value="Leave this place" class="btn btn-danger" onclick="location.href = '@Url.Action("MainGameplay", "Gameplay")'">
+</div>

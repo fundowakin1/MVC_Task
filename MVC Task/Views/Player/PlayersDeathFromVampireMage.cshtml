@@ -1,19 +1,9 @@
 ﻿@using MVC_Task.ViewModels
 
 
-@switch (CharacterViewModel.NpcMet)
-{
-    case "Assassin":
-        <h2>A sharp assassin's blade pierces your heart...</h2>
-        break;
-    case "Beggar":
-        <h2>It was a mistake not to give him money, a bunch of beggars chased you to death...</h2>
-        break;
-    case "Thief":
-        <h2>He took your money and your life(</h2>
-        break;
-}
 <div class="text-center">
+    <h2>He was a vampire-mage, your skills are poor comparing to his. Now you die...</h2>
+    <img src="/Images/VampireMageEnding.jpg" alt="vampire" width="500" height="700">
     <h1>Name: @CharacterViewModel.Name</h1>
     <h2>Race: @CharacterViewModel.Race</h2>
     <h2>Ending: Lost</h2>

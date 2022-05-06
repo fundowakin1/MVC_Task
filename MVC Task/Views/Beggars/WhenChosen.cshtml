@@ -1,7 +1,38 @@
-﻿@model MVC_Task.ViewModels.BeggarViewModel
+﻿@using MVC_Task.ViewModels
+@using MVC_Task.Resources
+@model MVC_Task.ViewModels.BeggarViewModel
 
-<h1>You've met beggar @Model.Beggar.MemberInfoEntity.Name</h1>
+<div>
+    <p>@CharacterViewModel.FormatMoney()</p>
+    <p>Pints of beer: @CharacterViewModel.PintsOfBeer</p>
+</div>
+<div class="text-center">
+    
+    <h2>@Messages.BeggarGreeting @Model.Beggar.MemberInfoEntity.Name</h2>
+    <img src="/Images/Beggar.jpg"  width="500" height="700" alt="Beggar image"/>
+    <h2>Please, give me some coins, good fellow...</h2>
+    @if (Model.Beggar.MemberInfoEntity.AmountOfMoney == 0)
+    {
+        <input type="button" value="Give him a pint of beer" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithAlcoholic", "Beggars")'">
+    }
+    else
+    {
+        <input type="button" value="Give him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithBeggar", "Beggars")'">
+    }
 
-<input type="button" value="Pay him some money" class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithBeggar", "Beggars", new {Model})'">
-@*@Html.ActionLink("Pay him some money", "InteractionWithBeggar", "Beggars",Model, new { @class = "btn btn-primary" })*@
-<input type="button" value="Reject the proposal" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player", Model.Character)'">
+
+    <input type="button" value="Don't give anything" class="btn btn-danger" onclick="location.href = '@Url.Action("PlayersDeath", "Player")'">
+
+    @if ((Model.Beggar.MemberInfoEntity.IsMage && Model.Beggar.MemberInfoEntity.IsMage) && @CharacterViewModel.Race is "Elven" or "Vampire")
+    {
+        <input type="button" value="You feel strange power..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMageMember", "SpecialMember")'">
+    }
+    else if (Model.Beggar.MemberInfoEntity.IsVampire && @CharacterViewModel.Race == "Vampire")
+    {
+        <input type="button" value="You feel strange smell..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithVampireMember", "SpecialMember")'">
+    }
+    else if (Model.Beggar.MemberInfoEntity.IsMage && @CharacterViewModel.Race == "Elven")
+    {
+        <input type="button" value="You feel strange power..." class="btn btn-danger" onclick="location.href = '@Url.Action("InteractionWithMageMember", "SpecialMember")'">
+    }
+</div>

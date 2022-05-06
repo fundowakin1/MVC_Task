@@ -13,32 +13,32 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
-            if (character.MetThieves<=0)
+            if (CharacterViewModel.MetThieves<=0)
             {
-                return RedirectToAction("MainGameplay", "Gameplay", character);
+                return RedirectToAction("MainGameplay", "Gameplay");
             }
             var thievesGuild = _unitOfWork.GuildRepository.GetOneByName("Guild of Thieves, Cutpurses and Allied Trades").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, thievesGuild.Count);
             var thieve = thievesGuild[chosenMemberId];
-            character.MetThieves--;
-            var guidAndCharacterInfo = new ThiefViewModel() { Thief = thieve, Character = character };
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.MetThieves--;
+            CharacterViewModel.AmountOfMoneyToInteract = thieve.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new ThiefViewModel() { Thief = thieve};
+            return View(guidInfo);
         }
         
-        public IActionResult InteractionWithThief(ThiefViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithThief()
         {
-            var character = guidAndCharacterInfo.Character;
-            character.AmountOfTurns++;
-            var thief = guidAndCharacterInfo.Thief;
-            var money = character.AmountOfMoney -= thief.MemberInfoEntity.AmountOfMoney;
-            if (character.NumberOfRetries > 0 && money > 0)
-                return RedirectToAction("MainGameplay", "Gameplay", character);
-            character.HasWon = false;
-            character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", character);
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.NpcMet = "Thief";
+            CharacterViewModel.AmountOfMoney -= CharacterViewModel.AmountOfMoneyToInteract;
+            if (CharacterViewModel.NumberOfRetries > 0 && CharacterViewModel.AmountOfMoney > 0)
+                return RedirectToAction("EndOfTurn", "Pub");
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
         }
 
 

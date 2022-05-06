@@ -13,23 +13,29 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var foolsGuild = _unitOfWork.GuildRepository.GetOneByName("The Guild of Fools and Joculators and College of Clowns").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, foolsGuild.Count);
             var fool = foolsGuild[chosenMemberId];
-            var guidAndCharacterInfo = new FoolViewModel() { Fool = fool, Character = character };
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.AmountOfMoneyToInteract = fool.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new FoolViewModel() { Fool = fool};
+            return View(guidInfo);
         }
 
-        public IActionResult InteractionWithThief(FoolViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithFool()
         {
-            var character = guidAndCharacterInfo.Character;
-            character.AmountOfTurns++;
-            character.AmountOfMoney += guidAndCharacterInfo.Fool.MemberInfoEntity.AmountOfMoney;
-            return RedirectToAction("MainGameplay", "Gameplay", character);
-           
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.AmountOfMoney += CharacterViewModel.AmountOfMoneyToInteract;
+            CharacterViewModel.NpcMet = "Fool";
+            return RedirectToAction("EndOfTurn", "Pub");
+        }
+        public IActionResult FoolDenial()
+        {
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.NpcMet = "FoolDenied";
+            return RedirectToAction("EndOfTurn", "Pub");
         }
     }
 }

@@ -25,4 +25,29 @@
     <UpToDateCheckInput Remove="Views\Assassins\WhenChosen.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Assassin.jpg" />
+    <None Include="wwwroot\Images\Beggar.jpg" />
+    <None Include="wwwroot\Images\Fool.jpg" />
+    <None Include="wwwroot\Images\MageEnding.jpg" />
+    <None Include="wwwroot\Images\Thief.jpg" />
+    <None Include="wwwroot\Images\VampireEnding.png" />
+    <None Include="wwwroot\Images\VampireMageEnding.jpg" />
+  </ItemGroup>
+
 </Project>

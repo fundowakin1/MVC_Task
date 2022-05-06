@@ -25,35 +25,73 @@ namespace MVC_Task.Controllers
         [HttpGet]
         public IActionResult CreateCharacter()
         {
-            var character = new CharacterViewModel();
-            return View(character);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult CreateCharacter(CharacterViewModel character)
+        public IActionResult CreateCharacter(CreateCharacterViewModel character)
         {
-            return RedirectToAction("MainGameplay", "Gameplay", character);
+            _unitOfWork.ResetGuildDb();
+            CharacterViewModel.Race = character.Race;
+            CharacterViewModel.AmountOfMoney = character.Race == "Elven" ? 150 : 100;
+            CharacterViewModel.AmountOfMoneyToInteract = 0;
+            CharacterViewModel.AmountOfTurns = 0;
+            CharacterViewModel.PintsOfBeer = 0;
+            CharacterViewModel.SpecialNpcMet = null;
+            CharacterViewModel.MetThieves = 6;
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = true;
+            CharacterViewModel.NumberOfRetries = 3;
+            CharacterViewModel.Name = character.Name;
+            return RedirectToAction("MainGameplay", "Gameplay");
         }
 
-        public IActionResult PlayersDeath(CharacterViewModel character)
+        public IActionResult PlayersDeath()
         {
             
             var player = new Player()
             {
-                AmountOfTurns = character.AmountOfTurns,
+                AmountOfTurns = CharacterViewModel.AmountOfTurns,
                 HasWon = false,
                 IsAlive = false
             };
             _unitOfWork.PlayerRepository.Add(player);
             var playerInfo = new PlayerInfo()
             {
-                AmountOfMoney = character.AmountOfMoney,
-                Name = character.Name,
-                Race = character.Race,
+                AmountOfMoney = CharacterViewModel.AmountOfMoney,
+                Name = CharacterViewModel.Name,
+                Race = CharacterViewModel.Race,
+                PlayerId = _unitOfWork.PlayerRepository.GetAll().Count()
+            };
+
+            _unitOfWork.PlayerInfoRepository.Add(playerInfo);
+
+            if (CharacterViewModel.SpecialNpcMet=="VampireMage")
+            {
+                return View("PlayersDeathFromVampireMage");
+            }
+
+            return View();
+        }
+        public IActionResult PlayersVictory()
+        {
+            
+            var player = new Player()
+            {
+                AmountOfTurns = CharacterViewModel.AmountOfTurns,
+                HasWon = true,
+                IsAlive = true
+            };
+            _unitOfWork.PlayerRepository.Add(player);
+            var playerInfo = new PlayerInfo()
+            {
+                AmountOfMoney = CharacterViewModel.AmountOfMoney,
+                Name = CharacterViewModel.Name,
+                Race = CharacterViewModel.Race,
                 PlayerId = _unitOfWork.PlayerRepository.GetAll().Count()
             };
             _unitOfWork.PlayerInfoRepository.Add(playerInfo);
-            return View(character);
+            return View();
         }
     }
 }

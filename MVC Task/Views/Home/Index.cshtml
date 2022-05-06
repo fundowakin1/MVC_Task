@@ -1,8 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="location.href = '@Url.Action("ShowScoreTable", "Player")'">Score table</button>
+﻿
+<div>
+    <div class="text-center">
+        <h2>Welcome to the fine city of Ankh-Morpork!</h2>
+        <h3>Ankh-Morpork lies on the River Ankh (the most polluted waterway on the Discworld and reputedly solid enough to walk on), 
+            where the fertile loam of the Sto Plains meets the Circle Sea. This, naturally, puts it in an excellent trading position. 
+            You can meet different fellows here but be careful, some of them are pretty dangerous</h3>
+        <h3>Watch your back, keep your coins safe and do not hang out with vampires!</h3>
+        <h3>Good luck my friendo!</h3>
+        <button type="button" class="btn btn-danger btn-lg btn-block" onclick="location.href = '@Url.Action("CreateCharacter", "Player")'">Enter Ankh-Morpork</button>
+        <button type="button" class="btn btn-success btn-lg btn-block" onclick="location.href = '@Url.Action("ShowScoreTable", "Player")'">Score table</button>
+    </div>
 </div>
+

@@ -14,27 +14,43 @@ namespace MVC_Task.Controllers.GuildsControllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var beggarsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Beggars' Guild").Members.ToList();
             var random = new Random();
             var chosenMemberId = random.Next(0, beggarsGuild.Count);
             var beggar = beggarsGuild[chosenMemberId];
-            var guidAndCharacterInfo = new BeggarViewModel(){Beggar = beggar, Character = character};
-            return View(guidAndCharacterInfo);
+            CharacterViewModel.AmountOfMoneyToInteract = beggar.MemberInfoEntity.AmountOfMoney;
+            var guidInfo = new BeggarViewModel() {Beggar = beggar};
+            return View(guidInfo);
         }
-        public IActionResult InteractionWithBeggar(CharacterViewModel character, Member member, MemberInfo memberInfo)
+        public IActionResult InteractionWithBeggar()
         {
-            var _character = character;
-            character.AmountOfTurns++;
-            var beggar = member;
-            var money = character.AmountOfMoney -= memberInfo.AmountOfMoney;
+            CharacterViewModel.AmountOfTurns++;
 
-            if (character.NumberOfRetries > 0 && money > 0)
-                return RedirectToAction("MainGameplay", "Gameplay", _character);
-            _character.HasWon = false;
-            _character.IsAlive = false;
-            return RedirectToAction("PlayersDeath", "Player", _character);
+            CharacterViewModel.AmountOfMoney -= CharacterViewModel.AmountOfMoneyToInteract;
+            CharacterViewModel.NpcMet = "Beggar";
+            if (CharacterViewModel.NumberOfRetries > 0 && CharacterViewModel.AmountOfMoney > 0)
+                return RedirectToAction("EndOfTurn", "Pub");
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
         }
+        public IActionResult InteractionWithAlcoholic()
+        {
+            CharacterViewModel.AmountOfTurns++;
+            CharacterViewModel.NpcMet = "Beggar";
+            if (CharacterViewModel.PintsOfBeer>0)
+            {
+                CharacterViewModel.PintsOfBeer--;
+                return RedirectToAction("EndOfTurn", "Pub");
+            }
+
+            CharacterViewModel.HasWon = false;
+            CharacterViewModel.IsAlive = false;
+            return RedirectToAction("PlayersDeath", "Player");
+        }
+
+        
     }
 }

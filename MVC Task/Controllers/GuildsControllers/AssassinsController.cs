@@ -9,71 +9,65 @@ namespace MVC_Task.Controllers.GuildsControllers
 {
     public class AssassinsController : Controller 
     {
+        private static Dictionary<int, AssassinViewModel.InfoAboutAssassin> _occupationDictionary;
         private IUnitOfWork _unitOfWork;
         public AssassinsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult WhenChosen(CharacterViewModel character)
+        public IActionResult WhenChosen()
         {
             var assassinsGuild = _unitOfWork.GuildRepository.GetOneByName("Ankh-Morpork Assassins' Guild").Members.ToList();
-            var occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
+            _occupationDictionary = new Dictionary<int, AssassinViewModel.InfoAboutAssassin>();
             for (var i = 0; i < assassinsGuild.Count; i++)
             {
                 var  higherBound = assassinsGuild[i].MemberInfoEntity.AmountOfMoney;
-                occupationDictionary
+                _occupationDictionary
                     .Add(i,new AssassinViewModel.InfoAboutAssassin(false, higherBound - 10, higherBound));
             };
 
             var counter = 0;
-            while (counter < occupationDictionary.Count / 2)
+            while (counter < _occupationDictionary.Count / 2)
             {
                 var random = new Random();
-                var assassinId = random.Next(1, occupationDictionary.Count);
-                if (!occupationDictionary[assassinId].IsOccupied) continue;
-                occupationDictionary[assassinId].IsOccupied = true;
+                var assassinId = random.Next(0, _occupationDictionary.Count);
+                if (_occupationDictionary[assassinId].IsOccupied) continue;
+                _occupationDictionary[assassinId].IsOccupied = true;
                 counter++;
             }
 
-            var guidAndCharacterInfo = new AssassinViewModel()
-            {
-                Character = character,
-                OccupationDictionary = occupationDictionary
-            };
-            return View(guidAndCharacterInfo);
+            return View();
         }
 
 
         [HttpGet]
-        public IActionResult InteractionWithAssassin(AssassinViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassin()
         {
-            var newGuildAndCharacterInfo = guidAndCharacterInfo;
-            return View(newGuildAndCharacterInfo);
+            return View();
         }
         [HttpPost]
-        public IActionResult InteractionWithAssassinPost(AssassinViewModel guidAndCharacterInfo)
+        public IActionResult InteractionWithAssassinPost(decimal amountOfMoneyToInteract)
         {
-            var character = guidAndCharacterInfo.Character;
-            var inputtedMoney = guidAndCharacterInfo.InputtedAmountOfMoney;
-            character.AmountOfTurns++;
+            CharacterViewModel.AmountOfTurns++;
             var notOccupiedAssassins =
-                guidAndCharacterInfo.OccupationDictionary.Where(assassin 
+                _occupationDictionary.Where(assassin 
                     => assassin.Value.IsOccupied == false);
-            
-            if (character.NumberOfRetries<=0)
+            var inputtedMoney = amountOfMoneyToInteract;
+            CharacterViewModel.NpcMet = "Assassin";
+            if (CharacterViewModel.NumberOfRetries<=0)
             {
-                character.HasWon = false;
-                character.IsAlive = false;
-                return RedirectToAction("PlayersDeath", "Player", character);
+                CharacterViewModel.HasWon = false;
+                CharacterViewModel.IsAlive = false;
+                return RedirectToAction("PlayersDeath", "Player");
             }
             if (!notOccupiedAssassins.Any(x => x.Value.LowerFeeBound < inputtedMoney
                                                && x.Value.UpperFeeBound > inputtedMoney))
             {
-                guidAndCharacterInfo.Character.NumberOfRetries--;
-                return RedirectToAction("InteractionWithAssassin", "Assassins", guidAndCharacterInfo);
+                CharacterViewModel.NumberOfRetries--;
+                return RedirectToAction("InteractionWithAssassin", "Assassins");
             }
-            character.AmountOfMoney -= inputtedMoney;
-            return RedirectToAction("MainGameplay", "Gameplay", character);
+            CharacterViewModel.AmountOfMoney -= inputtedMoney;
+            return RedirectToAction("EndOfTurn", "Pub");
 
         }
     }
